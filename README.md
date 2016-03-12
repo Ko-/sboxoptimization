@@ -81,7 +81,7 @@ A typical run will go like this. Assume we want to optimize the RECTANGLE S-box 
 
 ```
 $ ./getanf.py gc rectangle 11 > rectangle_gc11.eqs
-C:\> xl0.exe /deg3 /sat /dontsat /bard rectangle_gc11.eqs
+C:\> xl0.exe /deg3 /dontsat /bard rectangle_gc11.eqs
 $ nohup ./myfavouritesatsolver rectangle_gc11.eqs.cnf > rectangle_gc11.eqs.cnf.claim &
 $ ./cnfclaimtoclaim.py rectangle_gc11.eqs.cnf.claim > rectangle_gc11.eqs.claim.txt
 $ ./getsolution.py rectangle_gc11.eqs > rectangle_gc11.solution
