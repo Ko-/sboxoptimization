@@ -1,6 +1,6 @@
 # S-box optimization using SAT solvers
 
-These tools are part of the paper "Optimizing S-box Implementations for Several Criteria using SAT Solvers" by Ko Stoffelen, published at FSE 2016.
+These tools are part of the paper "Optimizing S-box Implementations for Several Criteria using SAT Solvers" by Ko Stoffelen, published at FSE 2016, available [here](https://ko.stoffelen.nl/papers/fse2016-sboxoptimization.pdf).
 
 ## getanf.py
 
