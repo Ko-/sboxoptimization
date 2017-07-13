@@ -51,6 +51,7 @@ if __name__ == "__main__":
 
     # substitute variables in equations according to solution found by SAT solver
     valmapq = {}
+    output = []
     for line in content:
         # substitute a's and b's
         for val in valmapab:
@@ -64,13 +65,16 @@ if __name__ == "__main__":
             else:
                 # remove e.g.: a_0 * x_0 +
                 line = re.sub(val + r'[^0-9][^+]*(\+ |$)', '', line)
+
+        if args.mode == 'mc':
+            output.append(line.rstrip(' \n+'))
         # if q's are equal to a single variable, we can substitute them completely
-        if args.mode != 'mc' and line.startswith('q_'):
+        elif line.startswith('q_'):
             val = line.rstrip(' \n+').split(' = ')
             if len(val) != 2:
                 continue
             valmapq[val[0]] = val[1]
-        elif args.mode != 'mc' and line.startswith('t_'):
+        elif line.startswith('t_'):
             # rewrite OR gate
             line = re.sub(r'(q_\d+) \* (q_\d+) \+ q_\d+ \+ q_\d+', r'\1 | \2', line)
             # add parenthesis for clarity on operator precedence for NAND/NOR gate
@@ -78,6 +82,11 @@ if __name__ == "__main__":
             # substitute q's
             for val in valmapq:
                 line = re.sub(val + r'\b', valmapq.get(val), line)
-            print(line.rstrip(' \n+'))
-        else:  # args.mode == 'mc' or line.startswith('y_')
-            print(line.rstrip(' \n+'))
+            output.append(line.rstrip(' \n+'))
+        elif line.startswith('y_'):
+            val = line.rstrip(' \n+').split(' = ')
+            # substitute t's that correspond to a y
+            for i in range(len(output)):
+                output[i] = re.sub(val[1], val[0], output[i])
+
+    print('\n'.join(output))
